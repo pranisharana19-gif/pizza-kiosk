@@ -4,28 +4,52 @@ import Menu from './components/Menu'
 import Cart from './components/Cart'
 import Customizer from './components/Customizer'
 import Checkout from './components/Checkout'
-import { pizzas } from './data/pizzas'
+import { pizzas, categories } from './data/pizzas'
 
 function App() {
   const [cart, setCart] = useState([])
   const [showCustomizer, setShowCustomizer] = useState(false)
-  const [selectedPizza, setSelectedPizza] = useState(null)
+  const [selectedItem, setSelectedItem] = useState(null)
   const [isCheckout, setIsCheckout] = useState(false)
   const [orderNumber, setOrderNumber] = useState(null)
+  const [activeCategory, setActiveCategory] = useState('pizzas')
 
-  const handleAddPizza = (pizza) => {
-    setSelectedPizza(pizza)
-    setShowCustomizer(true)
+  const handleAddItem = (item) => {
+    if (item.customizable) {
+      setSelectedItem(item)
+      setShowCustomizer(true)
+    } else {
+      // For non-customizable items, add directly to cart
+      const finalItem = {
+        ...item,
+        cartId: Date.now(),
+        totalPrice: item.basePrice,
+        quantity: 1,
+      }
+      setCart([...cart, finalItem])
+    }
   }
 
   const handleConfirmCustomization = (customizedItem) => {
     setCart([...cart, { ...customizedItem, cartId: Date.now() }])
     setShowCustomizer(false)
-    setSelectedPizza(null)
+    setSelectedItem(null)
   }
 
   const handleRemoveFromCart = (cartId) => {
     setCart(cart.filter(item => item.cartId !== cartId))
+  }
+
+  const handleUpdateQuantity = (cartId, quantity) => {
+    if (quantity <= 0) {
+      handleRemoveFromCart(cartId)
+    } else {
+      setCart(cart.map(item => 
+        item.cartId === cartId 
+          ? { ...item, quantity, totalPrice: item.basePrice * quantity }
+          : item
+      ))
+    }
   }
 
   const handlePlaceOrder = () => {
@@ -38,15 +62,20 @@ function App() {
     setCart([])
     setIsCheckout(false)
     setOrderNumber(null)
+    setActiveCategory('pizzas')
   }
 
+  const filteredItems = pizzas.filter(item => item.category === activeCategory)
   const totalPrice = cart.reduce((sum, item) => sum + item.totalPrice, 0)
+  const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0)
 
   return (
     <div className="app">
       <header className="app-header">
-        <h1>🍕 Pizza Palace</h1>
-        <p>Welcome to our self-service ordering kiosk!</p>
+        <div className="header-content">
+          <h1>🍕 Pizza Palace</h1>
+          <p>Your Favorite Food, Your Way!</p>
+        </div>
       </header>
 
       <div className="app-container">
@@ -54,24 +83,40 @@ function App() {
           <Checkout orderNumber={orderNumber} totalPrice={totalPrice} onNewOrder={handleResetOrder} />
         ) : (
           <>
-            <Menu pizzas={pizzas} onAddPizza={handleAddPizza} />
+            <div className="main-content">
+              <div className="category-tabs">
+                {categories.map(cat => (
+                  <button
+                    key={cat.id}
+                    className={`category-tab ${activeCategory === cat.id ? 'active' : ''}`}
+                    onClick={() => setActiveCategory(cat.id)}
+                  >
+                    <span className="tab-icon">{cat.icon}</span>
+                    <span className="tab-label">{cat.label}</span>
+                  </button>
+                ))}
+              </div>
+              <Menu items={filteredItems} onAddItem={handleAddItem} />
+            </div>
             <Cart 
-              items={cart} 
+              items={cart}
               totalPrice={totalPrice}
+              totalItems={totalItems}
               onRemoveItem={handleRemoveFromCart}
+              onUpdateQuantity={handleUpdateQuantity}
               onPlaceOrder={handlePlaceOrder}
             />
           </>
         )}
       </div>
 
-      {showCustomizer && selectedPizza && (
+      {showCustomizer && selectedItem && (
         <Customizer
-          pizza={selectedPizza}
+          item={selectedItem}
           onConfirm={handleConfirmCustomization}
           onCancel={() => {
             setShowCustomizer(false)
-            setSelectedPizza(null)
+            setSelectedItem(null)
           }}
         />
       )}
