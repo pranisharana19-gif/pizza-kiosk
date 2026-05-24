@@ -1,0 +1,144 @@
+.checkout-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 2rem;
+}
+
+.checkout-card {
+  background: white;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--accent-color), #5ab366);
+  color: white;
+  font-size: 3rem;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  animation: popIn 0.5s ease-out 0.2s both;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.checkout-card h1 {
+  font-size: 2rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.confirmation-text {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+.order-details {
+  background-color: var(--background);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.pickup-text {
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.new-order-button {
+  background: linear-gradient(135deg, var(--primary-color), #ff5252);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  width: 100%;
+}
+
+.new-order-button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.new-order-button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .checkout-container {
+    min-height: 60vh;
+    padding: 1rem;
+  }
+
+  .checkout-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .checkout-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .success-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+}

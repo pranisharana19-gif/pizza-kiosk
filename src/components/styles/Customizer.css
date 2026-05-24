@@ -1,0 +1,161 @@
+.customizer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.customizer {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: var(--text-dark);
+}
+
+.customizer h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+}
+
+.customizer-section {
+  margin-bottom: 2rem;
+}
+
+.customizer-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.size-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.size-option,
+.topping-option {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.size-option:hover,
+.topping-option:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(255, 107, 107, 0.05);
+}
+
+.size-option input,
+.topping-option input {
+  margin-right: 0.75rem;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.size-label,
+.topping-label {
+  cursor: pointer;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.toppings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.customizer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.price-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.price-display .label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.price-display .price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.confirm-button {
+  background: linear-gradient(135deg, var(--accent-color), #5ab366);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.confirm-button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.confirm-button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .customizer {
+    padding: 1.5rem;
+  }
+
+  .customizer h2 {
+    font-size: 1.3rem;
+  }
+
+  .toppings-grid {
+    grid-template-columns: 1fr;
+  }
+}
